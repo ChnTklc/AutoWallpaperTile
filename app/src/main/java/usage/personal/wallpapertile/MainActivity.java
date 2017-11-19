@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        filePath = (TextView) findViewById(R.id.textView);
-        button = (Button) findViewById(R.id.chooseFile);
+        filePath = findViewById(R.id.textView);
+        button = findViewById(R.id.chooseFile);
         filePath.setText(readString(getApplicationContext(), KEY_FOR_PATH));
     }
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     // Get the Uri of the selected file
                     Uri uri = data.getData();
-                    Log.d(TAG, "File Uri: " + uri.toString());
+                    Log.d(TAG, "File Uri: " + (uri != null ? uri.toString() : null));
                     String fu = null;
                     try {
                         fu = getPath(this, uri);

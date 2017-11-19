@@ -105,6 +105,7 @@ public class WallpaperChanger extends TileService {
                             .setAutoCancel(true);
             NotificationManager mNotificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            assert mNotificationManager != null;
             mNotificationManager.notify(0, mBuilder.build());
             return false;
         } else return true;
