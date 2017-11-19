@@ -1,7 +1,7 @@
 <resources>
     <string name="title_label">Auto Wallpaper</string>
     <string name="text">Choose</string>
-    <string name="upperButton">Choose an image to get its directory or do not choose to get all.</string>
+    <string name="upperButton">Choose an image to get its directory or do not choose to get all.\nDo not forget to add our tile to your quick actions!</string>
     <string name="filepath">All files</string>
     <string name="clear">Clear Path</string>
 </resources>

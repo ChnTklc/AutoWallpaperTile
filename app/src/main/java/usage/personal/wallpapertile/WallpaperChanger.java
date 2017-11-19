@@ -95,7 +95,7 @@ public class WallpaperChanger extends TileService {
             intent.setData(Uri.parse("package:" + "usage.personal.wallpapertile"));
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
             NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(this)
+                    new NotificationCompat.Builder(this) // TODO: fix deprecated.
                             .setContentIntent(contentIntent)
                             .setDefaults(Notification.DEFAULT_ALL)
                             .setSmallIcon(R.drawable.wallpaper_green)
