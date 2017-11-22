@@ -1,7 +1,22 @@
 <resources>
-    <string name="title_label">Auto Wallpaper</string>
-    <string name="text">Choose</string>
-    <string name="upperButton">Choose an image to get its directory or do not choose to get all.\nDo not forget to add our tile to your quick actions!</string>
-    <string name="filepath">All files</string>
-    <string name="clear">Clear Path</string>
+    <string name="title" translatable="false">Auto Wallpaper Tile</string>
+    <string name="chooseButton">Choose</string>
+    <string name="explanationParagraph">Choose an image to get its directory or do not choose to get all.\n
+        Do not forget to add our tile to your quick actions!</string>
+    <string name="defaultFilePath">All files</string>
+    <string name="clearButton">Clear Path</string>
+
+    <string name="file_picker_app_name" translatable="false">File Picker</string>
+
+    <string name="file_picker_no_subdirectories">No folders or files here</string>
+
+    <string name="file_picker_select_file">Select a file</string>
+    <string name="file_picker_select_folder">Select a folder</string>
+    <string name="file_picker_folder_name_empty">Folder name cannot be empty</string>
+
+    <string name="file_picker_folder_up">[Up]</string>
+    <string name="file_picker_folder_new">New Folder</string>
+
+    <string name="file_picker_internal_storage">Internal Storage</string>
+    <string name="file_picker_external_storage">SD Card</string>
 </resources>

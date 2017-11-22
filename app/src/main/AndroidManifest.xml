@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/wallpaper_green"
-        android:label="@string/title_label"
+        android:label="@string/title"
         android:roundIcon="@drawable/wallpaper_green"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".WallpaperChanger"
+            android:name=".WallpaperTile"
             android:enabled="true"
             android:exported="true"
-            android:label="@string/title_label"
+            android:label="@string/title"
             android:icon="@drawable/wallpaper_green"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>

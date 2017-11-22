@@ -13,43 +13,41 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="15dp"
-        android:text="@string/upperButton"
+        android:text="@string/explanationParagraph"
         android:textAlignment="center"
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/chooseFile"
+        android:id="@+id/chooseButton"
         style="@android:style/Widget.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
         android:layout_margin="10dp"
-        android:onClick="showFileChooser"
-        android:text="@string/text" />
+        android:text="@string/chooseButton" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/filepath"
+        android:text="@string/defaultFilePath"
         android:textAlignment="viewStart"
         android:layout_margin="10dp"
         android:textSize="20sp"
-        android:layout_below="@+id/chooseFile"
+        android:layout_below="@+id/chooseButton"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/clear"
+        android:id="@+id/clearButton"
         style="@android:style/Widget.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/chooseFile"
-        android:layout_alignBottom="@+id/chooseFile"
+        android:layout_alignBaseline="@+id/chooseButton"
+        android:layout_alignBottom="@+id/chooseButton"
         android:layout_alignEnd="@+id/textView"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:onClick="clearPath"
-        android:text="@string/clear" />
+        android:text="@string/clearButton" />
 
 </RelativeLayout>
