@@ -21,6 +21,7 @@ class WallpaperTile: TileService() {
             val choosenFolder =  File(MainActivity.getKEY(applicationContext, MainActivity.pathKey).toString())
             Log.i(tag, "Choosen Folder Path: "+ choosenFolder.path)
             val imagesList = choosenFolder.listFiles()
+            // TODO: check file if image or not
             val randomNumber = (0..imagesList.size).random()
             Log.i(tag, "Choosen Image Path: "+ imagesList[randomNumber].absolutePath)
             val newWP = BitmapFactory.decodeFile(imagesList[randomNumber].absolutePath)
