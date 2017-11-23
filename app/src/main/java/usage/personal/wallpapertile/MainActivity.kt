@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import usage.personal.wallpapertile.filepicker.FilePicker
-import usage.personal.wallpapertile.filepicker.FilePickerMode
+import tr.edu.iyte.filepicker.FilePicker
+import tr.edu.iyte.filepicker.FilePickerMode
 
 /**
  * Edited by Comteng on 22/11/2017.
@@ -37,13 +37,15 @@ class MainActivity : AppCompatActivity() {
         filePath.text = getKEY(applicationContext, pathKey)
 
         chooseButton.setOnClickListener {
+            Log.i(tag, "Choose Button: File picker should work")
             FilePicker(this@MainActivity, FilePickerMode.FOLDER_PICK){
                 setKEY(applicationContext, pathKey, it)
                 filePath.text = it
-            }
+            }.show()
         }
 
         clearButton.setOnClickListener {
+            Log.i(tag, "Clear Path: path cleared")
             removeKEY(pathKey)
             filePath.text = defaultPath
         }
@@ -69,20 +71,21 @@ class MainActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), writePermissionCode)
-        }
+        } else Log.i(tag, "Storage permission already granted.")
     }
 
     private fun checkSetWallpaperPermission() {
         if(ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SET_WALLPAPER) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SET_WALLPAPER), setWallpaperPermissionCode)
-        }
+        } else Log.i(tag, "Set wallpaper permission already granted.")
     }
 
     private fun removeKEY(KEY: String) {
         val editor = getSharedPreferences(sharedFileName, 0).edit()
         editor.remove(KEY)
         editor.apply()
+        Log.i(tag, "Path key removed from shared preferences.")
     }
 
     companion object {
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity() {
             val editor = context.getSharedPreferences(sharedFileName, 0).edit()
             editor.putString(KEY, path)
             editor.apply()
+            Log.i("MainActivity", "Path key added to shared preferences.")
         }
 
         fun getKEY(context: Context, KEY: String): CharSequence =
