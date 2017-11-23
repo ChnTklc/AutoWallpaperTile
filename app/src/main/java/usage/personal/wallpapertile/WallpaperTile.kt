@@ -18,9 +18,10 @@ class WallpaperTile: TileService() {
         super.onClick()
         Thread{
             val wpManager = WallpaperManager.getInstance(applicationContext)
-            val choosenFolder =  File(MainActivity.getKEY(applicationContext, MainActivity.pathKey).toString())
-            Log.i(tag, "Choosen Folder Path: "+ choosenFolder.path)
-            val imagesList = choosenFolder.listFiles()
+            val chosenFolder =  File(MainActivity.getKEY(applicationContext, MainActivity.pathKey).toString())
+            // TODO: check if no folder chosen all images should be picked
+            Log.i(tag, "Choosen Folder Path: "+ chosenFolder.path)
+            val imagesList = chosenFolder.listFiles()
             // TODO: check file if image or not
             val randomNumber = (0..imagesList.size).random()
             Log.i(tag, "Choosen Image Path: "+ imagesList[randomNumber].absolutePath)
