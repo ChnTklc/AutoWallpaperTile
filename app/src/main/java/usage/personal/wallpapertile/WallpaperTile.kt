@@ -1,6 +1,7 @@
 package usage.personal.wallpapertile
 
 import android.app.WallpaperManager
+import android.content.Intent
 import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -19,34 +20,34 @@ class WallpaperTile: TileService() {
 
     override fun onClick() {
         super.onClick()
-        Thread{
+        if (AskPermission.isPermissionGranted){
             val wpManager = WallpaperManager.getInstance(applicationContext)
             val path = MainActivity.getKEY(applicationContext, MainActivity.pathKey).toString()
-            if(path == MainActivity.defaultPath){
+            if (path == MainActivity.defaultPath) {
                 val allImagesInGallery = getAllImagesFromGallery()
-                if(allImagesInGallery.isNotEmpty()) {
+                if (allImagesInGallery.isNotEmpty()) {
                     val randomNumber = (0..allImagesInGallery.size).random()
-                    Log.i(tag, "Random Image Path: "+ allImagesInGallery[randomNumber])
+                    Log.i(tag, "Random Image Path: " + allImagesInGallery[randomNumber])
                     val newWP = BitmapFactory.decodeFile(allImagesInGallery[randomNumber])
                     wpManager.setBitmap(newWP)
                 } else {
-                    Toast.makeText(applicationContext,"You have no image in this file!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "You have no image in this file!", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 val chosenFolder = File(path)
-                val imageListInChosenFolder = chosenFolder.listFiles().filter{
+                val imageListInChosenFolder = chosenFolder.listFiles().filter {
                     !it.isDirectory && mimeTypeChecker.getContentType(it).startsWith("image/")
                 }
-                if(imageListInChosenFolder.isNotEmpty()) {
+                if (imageListInChosenFolder.isNotEmpty()) {
                     val randomNumber = (0..imageListInChosenFolder.size).random()
-                    Log.i(tag, "Random Image Path: "+ imageListInChosenFolder[randomNumber].absolutePath)
+                    Log.i(tag, "Random Image Path: " + imageListInChosenFolder[randomNumber].absolutePath)
                     val newWP = BitmapFactory.decodeFile(imageListInChosenFolder[randomNumber].absolutePath)
                     wpManager.setBitmap(newWP)
                 } else {
-                    Toast.makeText(applicationContext,"You have no image in this file!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "You have no image in this file!", Toast.LENGTH_SHORT).show()
                 }
             }
-        }.run()
+        } else startActivityAndCollapse(Intent(this, AskPermission::class.java))
     }
 /*
     private fun selectSubFiles(chosenFolder: File) {

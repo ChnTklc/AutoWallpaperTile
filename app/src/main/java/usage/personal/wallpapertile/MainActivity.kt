@@ -1,12 +1,8 @@
 package usage.personal.wallpapertile
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
@@ -16,18 +12,18 @@ import tr.edu.iyte.filepicker.FilePickerMode
 
 class MainActivity : AppCompatActivity() {
 
-    private val writePermissionCode = 0
-    private val setWallpaperPermissionCode = 1
-    private val tag = "MainActivity"
     private lateinit var filePath: TextView
     private lateinit var chooseButton: Button
     private lateinit var clearButton: Button
+    private val tag = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        checkWritePermission() // ask permission until granted
-        checkSetWallpaperPermission() // ask permission until granted
+        if(!AskPermission.isPermissionGranted) {
+            val intent = Intent(this, AskPermission::class.java)
+            startActivity(intent)
+        }
         filePath = findViewById(R.id.textView)
         chooseButton = findViewById(R.id.chooseButton)
         clearButton = findViewById(R.id.clearButton)
@@ -47,36 +43,6 @@ class MainActivity : AppCompatActivity() {
             removeKEY(pathKey)
             filePath.text = defaultPath
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode){
-            writePermissionCode -> {
-                if(resultCode == PackageManager.PERMISSION_GRANTED)
-                    Log.i(tag, "Write file permission granted.")
-                else checkWritePermission()
-            }
-            setWallpaperPermissionCode -> {
-                if(resultCode == PackageManager.PERMISSION_GRANTED)
-                    Log.i(tag, "Set wallpaper permission granted.")
-                else checkSetWallpaperPermission()
-            }
-        }
-    }
-
-    private fun checkWritePermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), writePermissionCode)
-        } else Log.i(tag, "Storage permission already granted.")
-    }
-
-    private fun checkSetWallpaperPermission() {
-        if(ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SET_WALLPAPER) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SET_WALLPAPER), setWallpaperPermissionCode)
-        } else Log.i(tag, "Set wallpaper permission already granted.")
     }
 
     private fun removeKEY(KEY: String) {
