@@ -17,6 +17,7 @@ class WallpaperTile: TileService() {
 
     private val tag = "WallpaperTile"
     private val mimeTypeChecker = MimetypesFileTypeMap()
+    //private val imagesListWithSubDirectories: MutableList<File> = mutableListOf()
 
     override fun onClick() {
         super.onClick()
@@ -49,29 +50,25 @@ class WallpaperTile: TileService() {
             }
         } else startActivityAndCollapse(Intent(this, AskPermission::class.java))
     }
-/*
-    private fun selectSubFiles(chosenFolder: File) {
+
+    /*private fun selectSubFiles(chosenFolder: File) {
         imagesListWithSubDirectories.addAll(
                 chosenFolder.listFiles().filter{
-                    if(it.isDirectory) { selectSubFiles(it) }
+                    if(it.isDirectory && !it.startsWith(".")) { selectSubFiles(it) }
                     mimeTypeChecker.getContentType(it).startsWith("image/")
                 })
-    }
-*/
+    }*/
+
     private fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) +  start
 
     private fun getAllImagesFromGallery() : MutableList<String>  {
-        val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val listOfAllImages: MutableList<String> = mutableListOf()
-        val cursor: Cursor
-        val columnIndexData: Int
+        val cursor = contentResolver.query(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME),
+                null, null, null)
+
+        val columnIndexData = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
         var pathOfImage: String
-        val projection: Array<String> = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-
-        cursor = contentResolver.query(uri, projection, null,
-                null, null)
-
-        columnIndexData = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+        val listOfAllImages: MutableList<String> = mutableListOf()
         while (cursor.moveToNext()) {
             pathOfImage = cursor.getString(columnIndexData)
             listOfAllImages.add(pathOfImage)

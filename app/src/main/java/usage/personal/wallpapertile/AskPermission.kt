@@ -43,6 +43,7 @@ class AskPermission: AppCompatActivity() {
             finish()
         }
     }
+
     companion object {
         var isPermissionGranted = false
     }
