@@ -14,9 +14,6 @@ import android.widget.TextView
 import tr.edu.iyte.filepicker.FilePicker
 import tr.edu.iyte.filepicker.FilePickerMode
 
-/**
- * Edited by Comteng on 22/11/2017.
- */
 class MainActivity : AppCompatActivity() {
 
     private val writePermissionCode = 0
@@ -90,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val sharedFileName = "WallpaperFilePath"
-        val defaultPath = "All Files"
+        val defaultPath = "All files"
         val pathKey = "PathKey"
 
         fun setKEY(context: Context, KEY: String, path: String) {
@@ -101,6 +98,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun getKEY(context: Context, KEY: String): CharSequence =
-                context.getSharedPreferences(sharedFileName, 0).getString(KEY, null) ?: defaultPath
+                context.getSharedPreferences(sharedFileName, 0).getString(KEY, defaultPath)
     }
 }

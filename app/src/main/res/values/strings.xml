@@ -1,9 +1,9 @@
 <resources>
     <string name="title" translatable="false">Auto Wallpaper Tile</string>
     <string name="chooseButton">Choose</string>
-    <string name="explanationParagraph">Choose a directory to randomize your wallpaper from that or
-        do not choose to randomize your whole gallery.\n Do not forget to add our tile to your quick
-        actions!</string>
+    <string name="explanationParagraph">Choose a directory to randomize your wallpaper from that
+        folder or do not choose at all to randomize your whole gallery.
+        \n Do not forget to add our tile to your quick actions!</string>
     <string name="defaultFilePath">All files</string>
     <string name="clearButton">Clear Path</string>
 </resources>
