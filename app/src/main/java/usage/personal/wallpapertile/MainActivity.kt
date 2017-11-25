@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             FilePicker(this@MainActivity, FilePickerMode.FOLDER_PICK){
                 setKEY(applicationContext, pathKey, it)
                 filePath.text = it
+                Log.i(tag, "Chosen Folder Path: "+ it)
             }.show()
         }
 

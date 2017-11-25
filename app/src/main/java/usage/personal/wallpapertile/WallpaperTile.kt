@@ -23,7 +23,7 @@ class WallpaperTile: TileService() {
             val wpManager = WallpaperManager.getInstance(applicationContext)
             val path = MainActivity.getKEY(applicationContext, MainActivity.pathKey).toString()
             if(path == MainActivity.defaultPath){
-                val allImagesInGallery = getImagesPath()
+                val allImagesInGallery = getAllImagesFromGallery()
                 if(allImagesInGallery.isNotEmpty()) {
                     val randomNumber = (0..allImagesInGallery.size).random()
                     Log.i(tag, "Random Image Path: "+ allImagesInGallery[randomNumber])
@@ -37,7 +37,6 @@ class WallpaperTile: TileService() {
                 val imageListInChosenFolder = chosenFolder.listFiles().filter{
                     !it.isDirectory && mimeTypeChecker.getContentType(it).startsWith("image/")
                 }
-                Log.i(tag, "Chosen Folder Path: "+ chosenFolder.path)
                 if(imageListInChosenFolder.isNotEmpty()) {
                     val randomNumber = (0..imageListInChosenFolder.size).random()
                     Log.i(tag, "Random Image Path: "+ imageListInChosenFolder[randomNumber].absolutePath)
@@ -60,7 +59,7 @@ class WallpaperTile: TileService() {
 */
     private fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) +  start
 
-    private fun getImagesPath() : MutableList<String>  {
+    private fun getAllImagesFromGallery() : MutableList<String>  {
         val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         val listOfAllImages: MutableList<String> = mutableListOf()
         val cursor: Cursor
