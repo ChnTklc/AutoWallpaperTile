@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.util.Log.i
 
 class AskPermission: AppCompatActivity() {
 
@@ -22,7 +22,7 @@ class AskPermission: AppCompatActivity() {
         when (requestCode) {
             permissionCode -> {
                 if (grantResults.all { it  == PackageManager.PERMISSION_GRANTED}) {
-                    Log.i(tag, "All permissions granted.")
+                    i(tag, "All permissions granted.")
                     MainActivity.setKEY(this, MainActivity.checkPermission, "1" )
                     finish()
                 } else finish()
@@ -38,7 +38,7 @@ class AskPermission: AppCompatActivity() {
             requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_WALLPAPER),
                     permissionCode)
         } else {
-            Log.i(tag, "All permission already granted.")
+            i(tag, "All permission already granted.")
             MainActivity.setKEY(this, MainActivity.checkPermission, "1" )
             finish()
         }

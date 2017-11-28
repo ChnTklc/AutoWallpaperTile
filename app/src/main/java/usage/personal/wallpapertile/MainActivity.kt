@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.util.Log.i
 import android.widget.Button
 import android.widget.TextView
 import tr.edu.iyte.filepicker.FilePicker
@@ -29,17 +29,17 @@ class MainActivity : AppCompatActivity() {
 
         chooseButton.setOnClickListener {
             if(getKEY(this, checkPermission) == "1") {
-                Log.i(tag, "Choose Button: File picker should work")
+                i(tag, "Choose Button: File picker should work")
                 FilePicker(this@MainActivity, FilePickerMode.FOLDER_PICK) {
                     setKEY(applicationContext, pathKey, it)
                     filePath.text = it
-                    Log.i(tag, "Chosen Folder Path: " + it)
+                    i(tag, "Chosen Folder Path: " + it)
                 }.show()
             } else goAskPermission()
         }
 
         clearButton.setOnClickListener {
-            Log.i(tag, "Clear Path: path cleared")
+            i(tag, "Clear Path: path cleared")
             removeKEY(pathKey)
             filePath.text = defaultPath
         }
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val editor = getSharedPreferences(sharedFileName, 0).edit()
         editor.remove(KEY)
         editor.apply()
-        Log.i(tag, "Path key removed from shared preferences.")
+        i(tag, "Path key removed from shared preferences.")
     }
 
     companion object {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             val editor = context.getSharedPreferences(sharedFileName, 0).edit()
             editor.putString(KEY, path)
             editor.apply()
-            Log.i("MainActivity", "Path key added to shared preferences.")
+            i("MainActivity", "Path key added to shared preferences.")
         }
 
         fun getKEY(context: Context, KEY: String): CharSequence =

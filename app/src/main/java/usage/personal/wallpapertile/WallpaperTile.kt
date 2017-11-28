@@ -2,21 +2,18 @@ package usage.personal.wallpapertile
 
 import android.app.WallpaperManager
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.provider.MediaStore
 import android.service.quicksettings.TileService
-import android.util.Log
+import android.util.Log.i
 import android.widget.Toast
 import java.io.File
+import java.net.URLConnection
 import java.util.Random
-import javax.activation.MimetypesFileTypeMap
 
 class WallpaperTile: TileService() {
 
     private val tag = "WallpaperTile"
-    private val mimeTypeChecker = MimetypesFileTypeMap()
     //private val imagesListWithSubDirectories: MutableList<File> = mutableListOf()
 
     override fun onClick() {
@@ -28,7 +25,7 @@ class WallpaperTile: TileService() {
                 val allImagesInGallery = getAllImagesFromGallery()
                 if (allImagesInGallery.isNotEmpty()) {
                     val randomNumber = (0..allImagesInGallery.size).random()
-                    Log.i(tag, "Random Image Path: " + allImagesInGallery[randomNumber])
+                    i(tag, "Random Image Path: " + allImagesInGallery[randomNumber])
                     val newWP = BitmapFactory.decodeFile(allImagesInGallery[randomNumber])
                     wpManager.setBitmap(newWP)
                 } else {
@@ -37,11 +34,11 @@ class WallpaperTile: TileService() {
             } else {
                 val chosenFolder = File(path)
                 val imageListInChosenFolder = chosenFolder.listFiles().filter {
-                    !it.isDirectory && mimeTypeChecker.getContentType(it).startsWith("image/")
+                    !it.isDirectory && isImageFile(it.path)
                 }
                 if (imageListInChosenFolder.isNotEmpty()) {
                     val randomNumber = (0..imageListInChosenFolder.size).random()
-                    Log.i(tag, "Random Image Path: " + imageListInChosenFolder[randomNumber].absolutePath)
+                    i(tag, "Random Image Path: " + imageListInChosenFolder[randomNumber].absolutePath)
                     val newWP = BitmapFactory.decodeFile(imageListInChosenFolder[randomNumber].absolutePath)
                     wpManager.setBitmap(newWP)
                 } else {
@@ -55,12 +52,19 @@ class WallpaperTile: TileService() {
         imagesListWithSubDirectories.addAll(
                 chosenFolder.listFiles().filter{
                     if(it.isDirectory && !it.startsWith(".")) { selectSubFiles(it) }
-                    mimeTypeChecker.getContentType(it).startsWith("image/")
+                    isImageFile(it.path)
                 })
     }*/
 
+    // https://stackoverflow.com/a/30696106/7285362
+    private fun isImageFile(path: String): Boolean {
+        val mimeType = URLConnection.guessContentTypeFromName(path)
+        return mimeType != null && mimeType.startsWith("image")
+    }
+
     private fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) +  start
 
+    // https://stackoverflow.com/a/45657553/7285362
     private fun getAllImagesFromGallery() : MutableList<String>  {
         val cursor = contentResolver.query(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME),
