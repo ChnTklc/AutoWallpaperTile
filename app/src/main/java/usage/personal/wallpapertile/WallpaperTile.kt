@@ -21,7 +21,7 @@ class WallpaperTile: TileService() {
 
     override fun onClick() {
         super.onClick()
-        if (AskPermission.isPermissionGranted){
+        if (MainActivity.getKEY(this, MainActivity.checkPermission) == "1"){
             val wpManager = WallpaperManager.getInstance(applicationContext)
             val path = MainActivity.getKEY(applicationContext, MainActivity.pathKey).toString()
             if (path == MainActivity.defaultPath) {
@@ -48,7 +48,7 @@ class WallpaperTile: TileService() {
                     Toast.makeText(applicationContext, "You have no image in this file!", Toast.LENGTH_SHORT).show()
                 }
             }
-        } else startActivityAndCollapse(Intent(this, AskPermission::class.java))
+        } else startActivity(Intent(this, AskPermission::class.java))
     }
 
     /*private fun selectSubFiles(chosenFolder: File) {

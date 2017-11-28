@@ -20,22 +20,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(!AskPermission.isPermissionGranted) {
-            val intent = Intent(this, AskPermission::class.java)
-            startActivity(intent)
-        }
         filePath = findViewById(R.id.textView)
         chooseButton = findViewById(R.id.chooseButton)
         clearButton = findViewById(R.id.clearButton)
         filePath.text = getKEY(applicationContext, pathKey)
 
+        if(getKEY(this, checkPermission) == "1") goAskPermission()
+
         chooseButton.setOnClickListener {
-            Log.i(tag, "Choose Button: File picker should work")
-            FilePicker(this@MainActivity, FilePickerMode.FOLDER_PICK){
-                setKEY(applicationContext, pathKey, it)
-                filePath.text = it
-                Log.i(tag, "Chosen Folder Path: "+ it)
-            }.show()
+            if(getKEY(this, checkPermission) == "1") {
+                Log.i(tag, "Choose Button: File picker should work")
+                FilePicker(this@MainActivity, FilePickerMode.FOLDER_PICK) {
+                    setKEY(applicationContext, pathKey, it)
+                    filePath.text = it
+                    Log.i(tag, "Chosen Folder Path: " + it)
+                }.show()
+            } else goAskPermission()
         }
 
         clearButton.setOnClickListener {
@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun goAskPermission() = startActivity(Intent(this, AskPermission::class.java))
+
     private fun removeKEY(KEY: String) {
         val editor = getSharedPreferences(sharedFileName, 0).edit()
         editor.remove(KEY)
@@ -53,9 +55,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val sharedFileName = "WallpaperFilePath"
+        val sharedFileName = "WallpaperFile"
         val defaultPath = "All files"
         val pathKey = "PathKey"
+        val checkPermission = "isPermissionGranted"
 
         fun setKEY(context: Context, KEY: String, path: String) {
             val editor = context.getSharedPreferences(sharedFileName, 0).edit()

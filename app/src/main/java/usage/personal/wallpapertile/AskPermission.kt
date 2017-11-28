@@ -23,9 +23,9 @@ class AskPermission: AppCompatActivity() {
             permissionCode -> {
                 if (grantResults.all { it  == PackageManager.PERMISSION_GRANTED}) {
                     Log.i(tag, "All permissions granted.")
-                    isPermissionGranted = true
+                    MainActivity.setKEY(this, MainActivity.checkPermission, "1" )
                     finish()
-                } else checkPermission()
+                } else finish()
             }
         }
     }
@@ -39,12 +39,8 @@ class AskPermission: AppCompatActivity() {
                     permissionCode)
         } else {
             Log.i(tag, "All permission already granted.")
-            isPermissionGranted = true
+            MainActivity.setKEY(this, MainActivity.checkPermission, "1" )
             finish()
         }
-    }
-
-    companion object {
-        var isPermissionGranted = false
     }
 }
